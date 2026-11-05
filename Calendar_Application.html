@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Capstone Calander Application</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Icon set -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Typeface -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+<!-- ===== FullCalendar web component (copied from calendar.html header, web-component versions) ===== -->
+<!-- STANDARD JS -->
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@7.1.3/all/global.js"></script>
+<!-- THEME JS -->
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@7.1.3/themes/monarch/global.js"></script>
+<!-- STYLESHEETS (the two .styles.js files inject CSS into the calendar's shadow DOM) -->
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@7.1.3/skeleton.styles.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@7.1.3/themes/monarch/theme.styles.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@7.1.3/themes/monarch/palettes/purple.css" rel="stylesheet" />
+
+<!-- Custom stylesheet -->
+<link rel="stylesheet" href="stylesheet.css">
+<style>
+/* ---- Layout overrides (calendar, info box, dashboard header, headings) ---- */
+.main{ margin-left:0; }                             /* content now runs to the left edge */
+.dash-head{ display:flex; flex-wrap:wrap; align-items:flex-start; }
+.dash-head .profile{                                /* Welcome block, now inside the dashboard header */
+  width:var(--sidebar-width); margin-top:13px; padding:16px;
+  display:flex; align-items:center;
+}
+.dash-titles{ padding:22px 16px 0 16px; }           /* "My Dashboard" with "Calendar" directly beneath it */
+.dash-titles h5{ font-size:20px; margin:11px 0 0; }
+.dash-titles h5 + h5{ margin-top:14px; }
+.main{ min-height:calc(100vh - var(--topbar-height)); padding-bottom:0; display:flex; flex-direction:column; }
+.main footer{ flex:1 1 auto; margin-top:16px; }     /* footer stretches to the bottom of the window */
+.panel{ padding:0 16px 0 0; }                       /* no left padding: calendar touches the left edge */
+
+.cal-wrap{
+  display:flex; flex-wrap:nowrap; gap:16px; align-items:stretch;
+  height:calc(100vh - 330px); min-height:560px;
+}
+full-calendar{ display:block; }
+#calendar{
+  flex:1 1 auto; min-width:0; height:100%;
+  border:0; background:var(--color-white);
+}
+.event-info{
+  flex:0 0 280px; max-width:none; margin-left:0; height:100%;
+  overflow-y:auto; padding:16px; background:var(--color-white);
+  border:3px solid #2169ac; font-size:18px; overflow-wrap:anywhere;
+}
+@media (max-width:800px){
+  .cal-wrap{ flex-direction:column; height:auto; }
+  #calendar{ height:600px; flex:none; }
+  .event-info{ flex:none; height:220px; }
+}
+</style>
+</head>
+
+<body class="white">
+
+<!-- Top Container -->
+<div class="flex top black">
+
+  <span class="padding" style="margin-left:auto"><Logo class="png"></Logo></span>
+    <img src="Logo.png"
+      class="circle margin-right"
+      style="width:35px"
+      alt="Logo">
+
+</div>
+
+<!-- Page Content -->
+<main class="main">
+
+  <!-- Header: Welcome block + dashboard title -->
+  <header class="dash-head">
+  <div class="profile">
+
+    <img src="Avatar.png"
+    class="circle margin-right"
+    style="width:80px;height:80px"
+    alt="Pic">
+
+    <div>
+      <span class="profile-name">Welcome, <b>Rachel</b></span><br>
+
+      <a href="#" class="button">
+        <i class="fa fa-envelope"></i>
+      </a>
+
+      <a href="#" class="button">
+        <i class="fa fa-user"></i>
+      </a>
+
+      <a href="#" class="button">
+        <i class="fa fa-cog"></i>
+      </a>
+    </div>
+
+  </div>
+
+    <div class="dash-titles">
+      <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+      <h5>Calendar</h5>
+    </div>
+  </header>
+
+  <!-- Calendar + event info box -->
+  <div class="panel">
+
+    <div class="cal-wrap">
+
+      <full-calendar id="calendar"></full-calendar>
+
+      <!-- Display-only box. -->
+      <div class="event-info" id="eventInfo">
+        <h4>Title: <span id="eventTitle" >Event Name</span></h4>
+        <h4>Description:</h4>
+        <p id="eventDesc"> Description goes here.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Fancy Area -->
+  <footer class="container padding-16 light-grey">
+    <h4>Resources used for 493 Capstone:</h4>
+    <p>
+    <a href="https://www.w3schools.com/w3css/default.asp"
+    target="_blank">Template used:</a>
+    </p>
+  </footer>
+
+</main>
+
+<script>
+function setEventInfo(title, description) {
+  document.getElementById("eventTitle").textContent = title;
+  document.getElementById("eventDesc").textContent = description;
+}
+
+// ---- Calendar: options go on the <full-calendar> element's .options property ----
+const currentDate = new Date();
+const ym = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
+
+const calendarEl = document.getElementById('calendar');   // the <full-calendar> tag
+
+calendarEl.options = {
+  height: '100%',
+  initialView: 'dayGridMonth',
+  initialDate: `${ym}-07`,
+  headerToolbar: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+  },
+
+  // Same page now, so this updates the text box directly (no postMessage needed).
+  eventMouseEnter: function (info) {
+    setEventInfo(
+      info.event.title || '(Untitled event)',
+      info.event.extendedProps.description || 'No description.'
+    );
+  },
+
+  events: '/Events.Json'
+};
+</script>
+
+</body>
+</html>

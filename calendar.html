@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>html,body{height:100%;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}</style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <meta charset="utf-8" />
+    <!-- STANDARD JS -->
+    <script src="file:///C:/Users/Natalia/IT%20493%20Capstone/Calendar%20Application/fullcalendar-7.1.1/dist/fullcalendar.global.js"></script>
+
+    <!-- THEME JS -->
+    <script src="file:///C:/Users/Natalia/IT%20493%20Capstone/Calendar%20Application/fullcalendar-7.1.1/dist/themes/monarch/global.js"></script>
+
+
+    <!-- STYLESHEETS -->
+    <link href='file:///C:/Users/Natalia/IT%20493%20Capstone/Calendar%20Application/fullcalendar-7.1.1/dist/skeleton.css' rel='stylesheet' />
+    <link href='file:///C:/Users/Natalia/IT%20493%20Capstone/Calendar%20Application/fullcalendar-7.1.1/dist/themes/monarch/theme.css' rel='stylesheet' />
+    <link href='file:///C:/Users/Natalia/IT%20493%20Capstone/Calendar%20Application/fullcalendar-7.1.1/dist/themes/monarch/palettes/purple.css' rel='stylesheet' />
+    <script>
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+  const currentDate = new Date();
+  const ym = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
+  const calendarEl = document.getElementById('calendar');
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    height: '100%',
+    initialView: 'dayGridMonth',
+    initialDate: `${ym}-07`,
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+   
+    eventMouseEnter: function (info) {
+      window.parent.postMessage({
+        type: 'eventHover',
+        title: info.event.title || '(Untitled event)',
+        description: info.event.extendedProps.description || 'No description.'
+      }, '*');
+    },
+
+    events: [
+  {
+    title: "Employer's Quarterly Tax Return",
+    start: '2026-04-30T04:00:00.000Z',
+    url: 'https://www.irs.gov/forms-pubs/about-form-941'
+  },
+  {
+    title: "Employer's Quarterly Tax Return",
+    start: '2026-07-31T04:00:00.000Z',
+    url: 'https://www.irs.gov/forms-pubs/about-form-941'
+  },
+  {
+    title: "Employer's Quarterly Tax Return",
+    start: '2026-10-31T04:00:00.000Z',
+    url: 'https://www.irs.gov/forms-pubs/about-form-941'
+  },
+  {
+    title: "Employer's Quarterly Tax Return",
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://www.irs.gov/forms-pubs/about-form-941'
+  },
+  {
+    title: 'Employer Quarterly FC20/21 eForm',
+    start: '2026-04-30T04:00:00.000Z',
+    url: 'https://employer.vec.virginia.gov/eForms/fc20#'
+  },
+  {
+    title: 'Employer Quarterly FC20/21 eForm',
+    start: '2026-07-31T04:00:00.000Z',
+    url: 'https://employer.vec.virginia.gov/eForms/fc20#'
+  },
+  {
+    title: 'Employer Quarterly FC20/21 eForm',
+    start: '2026-10-31T04:00:00.000Z',
+    url: 'https://employer.vec.virginia.gov/eForms/fc20#'
+  },
+  {
+    title: 'Employer Quarterly FC20/21 eForm',
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://employer.vec.virginia.gov/eForms/fc20#'
+  },
+  {
+    title: 'V-5 Monthly',
+    start: '2026-01-01T05:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va5m.php'
+  },
+  {
+    title: 'V-5 quarterly',
+    start: '2026-04-30T04:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va5q.php'
+  },
+  {
+    title: 'V-5 quarterly',
+    start: '2026-07-31T04:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va5q.php'
+  },
+  {
+    title: 'V-5 quarterly',
+    start: '2026-10-31T04:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va5q.php'
+  },
+  {
+    title: 'V-5 quarterly',
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va5q.php'
+  },
+  {
+    title: 'reconciliation of VA15',
+    start: '2026-04-30T04:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va16.php'
+  },
+  {
+    title: 'reconciliation of VA15',
+    start: '2026-07-31T04:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va16.php'
+  },
+  {
+    title: 'reconciliation of VA15',
+    start: '2026-10-31T04:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va16.php'
+  },
+  {
+    title: 'reconciliation of VA15',
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/va16.php'
+  },
+  {
+    title: 'annual return/reconciliation plus W2s',
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/w2-va6.php'
+  },
+  {
+    title: "Employer's Annual Federal Unemployment Tax Return (FUTA)",
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://www.irs.gov/forms-pubs/about-form-940'
+  },
+  {
+    title: 'schedule a',
+    start: '2026-01-31T05:00:00.000Z',
+    url: 'https://www.irs.gov/forms-pubs/about-form-940#sched-a'
+  },
+  {
+    title: 'Send W2s and W3 to Social Security',
+    start: '2026-01-31T05:00:00.000Z',
+    url: null
+  },
+  {
+    title: 'Send W2s and W3 to Social Security',
+    start: '2026-01-31T05:00:00.000Z',
+    url: null
+  },
+  {
+    title: null,
+    start: '2026-01-01T05:00:00.000Z',
+    url: 'https://www.business.tax.virginia.gov/tax-eforms/1099nec.php'
+  }
+]
+  });
+  
+  calendar.render();
+});
+    </script>
+  </head>
+  <body style="margin:0;height:100vh">
+    <div id="calendar" style="height:100%"></div>
+  </body>
+</html>
