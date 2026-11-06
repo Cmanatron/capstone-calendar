@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.1161.0",
+    "node-cron": "^4.6.0"
+  }
+}

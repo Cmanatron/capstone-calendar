@@ -25,23 +25,12 @@ const ses = new SESClient({
 
 
 
-const csvDir = fs.readdirSync(path.join(__dirname,'/CSV'));
+const csvDir = fs.readdirSync(path.join(__dirname));
 //console.log(csvDir);
 let initCatalogue = [];
-csvDir.forEach(file=>{
-    //console.log('file: ' + file);
-    let ext = file.split('.')[1]
-   //console.log(ext);
-    if(ext === 'csv'){
-        initCatalogue.push(...fs.readFileSync(path.join(__dirname+'/CSV',file),'utf-8').split("\n")); 
-    }
-});
-//console.log(initCatalogue);
-
-
 
 async function googleDrive(){
-    console.log('Google was Drived')
+    
     const target = CONFIG.LINK
     const response = await fetch(target)
     if(!response.ok){
@@ -52,7 +41,24 @@ async function googleDrive(){
     console.log('I got the data')
     const buffer = Buffer.from(await response.arrayBuffer());
     fs.writeFileSync('TestFile.csv', buffer);
+    console.log('Google was Drived')
+}
+
+
+
+
+googleDrive()
+
+csvDir.forEach(file=>{
+    //console.log('file: ' + file);
+    let ext = file.split('.')[1]
+   //console.log(ext);
+    if(ext === 'csv'){
+        initCatalogue.push(...fs.readFileSync("TestFile.csv","utf-8").split("\n")); 
     }
+});
+//console.log(initCatalogue);
+
 
 
 function sanatize(array){
@@ -156,10 +162,6 @@ fs.writeFileSync("Events.json",JSON.stringify(updateCalendar()),'utf8', (err) =>
 });
 
 
-
-
-googleDrive()
-
 async function sendEmail(message) {
    // console.log(message)
     const command = new SendEmailCommand({
@@ -184,27 +186,13 @@ async function sendEmail(message) {
 }
 
 function withinWeek(date1,date2){
+    let dateA = new Date(date1);
+    let dateB = new Date(date2);
 
-    dateA = new Date(date1)
-    dateB = new Date(date2)
+    const difference = dateB - dateA;
+    const oneWeek = 7 * 24 * 60 * 60 * 1000;
 
-    //console.log(dateA)
-    //console.log(dateB)
-
-    var month = dateB.getMonth()
-    var day = dateB.getDate()
-
-    if(month === dateA.getMonth() + 1){
-        day = day + 30 
-    }
-
-    if(dateA.getMonth() == month || dateA.getMonth() + 1 == month){
-        if((day - dateA.getDay <= 7) && (day - dateA.getDate >= 0)){
-            return true
-        }
-    }else{
-        return false
-    }
+    return difference <= oneWeek && difference >=0;
 }
 
 
