@@ -1,0 +1,8 @@
+# macOS metadata
+.DS_Store
+._*
+__MACOSX/
+
+# Generated calendar data (node JsonParser.js)
+/Calendar.json
+/Events.json

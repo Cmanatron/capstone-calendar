@@ -1,0 +1,12 @@
+{
+  "name": "capstone-calendar",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node JsonParser.js",
+    "test": "node --test JsonParser.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
